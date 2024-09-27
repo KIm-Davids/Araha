@@ -28,7 +28,7 @@ class UserServiceTest {
     public void testToRegisterUser(){
         UserRegisterResponse userRegisterResponse = userRegister();
         assertThat(userRegisterResponse).isNotNull();
-        assertThat(userService.getAllUsers().size()).isEqualTo(1L);
+        assertThat(userService.getAllUser().size()).isEqualTo(1L);
        assertThat(userRegisterResponse.getMessage()).contains("successfully registered");
     }
 
@@ -77,14 +77,14 @@ class UserServiceTest {
         userLoginRequest.setPassword("wrongpassword");
         assertThrows(EmailAlreadyExist.class, ()-> userService.login(userLoginRequest));
     }
-    @Test
-    public void testThatUserUpdateTheirDetails(){
-        userRegister();
-        userLogin();
-        UpdateUserRequest userUpdateRequest = new UpdateUserRequest();
-
-
-    }
+//    @Test
+//    public void testThatUserUpdateTheirDetails(){
+//        userRegister();
+//        userLogin();
+//        UpdateUserRequest userUpdateRequest = new UpdateUserRequest();
+//
+//
+//    }
 
 
 }

@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @Setter
 public class CreateSubscriptionRequest {
 
-    private String userToken;
     private SubscriptionType subscriptionType;
+    private String userToken;
     private String subscriptionDesc;
     private double amount;
     private LocalDateTime localDateTime;
