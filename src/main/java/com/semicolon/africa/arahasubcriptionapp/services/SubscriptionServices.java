@@ -6,7 +6,7 @@ import com.semicolon.africa.arahasubcriptionapp.dtos.responses.SubscriptionRespo
 
 public interface SubscriptionServices {
 
-    CreateSubscriptionResponse createSubscription(CreateSubscriptionRequest request);
+//    CreateSubscriptionResponse createSubscription(CreateSubscriptionRequest request);
 
     void changeSubscription(changeSubRequest request);
 
