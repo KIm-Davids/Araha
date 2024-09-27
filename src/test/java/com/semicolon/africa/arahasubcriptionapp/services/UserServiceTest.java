@@ -96,4 +96,13 @@ class UserServiceTest {
         assertThat(updatedUserResponse).isNotNull();
         assertThat(updatedUserResponse.getMessage()).contains("updated successfully");
     }
+//    public void testThatUserUpdateTheirDetails(){
+//        userRegister();
+//        userLogin();
+//        UpdateUserRequest userUpdateRequest = new UpdateUserRequest();
+//
+//
+//    }
+
+
 }
