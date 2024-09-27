@@ -5,11 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 
-@Setter
-@Getter
-@AllArgsConstructor
-public class ApiResponse {
-
 @Getter
 @Setter
 @AllArgsConstructor

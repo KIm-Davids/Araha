@@ -18,4 +18,5 @@ public class mapSubscriptions {
         subscription.setActive(true);
         return subscription;
     }
+
 }
