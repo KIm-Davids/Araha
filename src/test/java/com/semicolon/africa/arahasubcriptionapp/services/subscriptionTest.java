@@ -14,15 +14,19 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import static org.junit.jupiter.api.Assertions.assertEquals;
 =======
 >>>>>>> 8176f6a12d5f35dc74bf04df3ebb17425f6ec9f5
+=======
+>>>>>>> 1c283acdadc6d353384fe13ade5d8f6a417fd08f
 
 
 @SpringBootTest
 class SubscriptionTest {
 
     @Autowired
+<<<<<<< HEAD
 <<<<<<< HEAD
     private SubscriptionServices service;
 
@@ -38,6 +42,8 @@ class SubscriptionTest {
 
 
 =======
+=======
+>>>>>>> 1c283acdadc6d353384fe13ade5d8f6a417fd08f
     private static SubscriptionServices service;
 
     @Test
@@ -56,6 +62,9 @@ class SubscriptionTest {
         request.setLocalDateTime(LocalDateTime.now());
         request.setSubscriptionDesc("Pay for netflix");
         return request;
+<<<<<<< HEAD
 >>>>>>> 8176f6a12d5f35dc74bf04df3ebb17425f6ec9f5
+=======
+>>>>>>> 1c283acdadc6d353384fe13ade5d8f6a417fd08f
     }
 }

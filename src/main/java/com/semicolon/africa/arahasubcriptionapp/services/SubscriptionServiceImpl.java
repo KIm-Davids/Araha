@@ -1,31 +1,42 @@
 package com.semicolon.africa.arahasubcriptionapp.services;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import com.semicolon.africa.arahasubcriptionapp.constants.SubscriptionType;
 =======
 >>>>>>> 8176f6a12d5f35dc74bf04df3ebb17425f6ec9f5
+=======
+>>>>>>> 1c283acdadc6d353384fe13ade5d8f6a417fd08f
 import com.semicolon.africa.arahasubcriptionapp.data.models.Subscription;
 import com.semicolon.africa.arahasubcriptionapp.data.repositories.SubscriptionRepository;
 import com.semicolon.africa.arahasubcriptionapp.dtos.requests.*;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.CreateSubscriptionResponse;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.SubscriptionResponse;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import com.semicolon.africa.arahasubcriptionapp.exceptions.AllReadyOnASubscription;
 =======
 >>>>>>> 8176f6a12d5f35dc74bf04df3ebb17425f6ec9f5
+=======
+>>>>>>> 1c283acdadc6d353384fe13ade5d8f6a417fd08f
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import static com.semicolon.africa.arahasubcriptionapp.mapper.mapSubscriptions.mapSubscription;
 >>>>>>> 8176f6a12d5f35dc74bf04df3ebb17425f6ec9f5
+=======
+import static com.semicolon.africa.arahasubcriptionapp.mapper.mapSubscriptions.mapSubscription;
+>>>>>>> 1c283acdadc6d353384fe13ade5d8f6a417fd08f
 
 @Service
 public class SubscriptionServiceImpl implements SubscriptionServices {
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     private final SubscriptionRepository subscriptionRepository;
 
@@ -54,6 +65,8 @@ public class SubscriptionServiceImpl implements SubscriptionServices {
         createSubscriptionResponse.setMessage("Successfully created subscription");
         return createSubscriptionResponse;
 =======
+=======
+>>>>>>> 1c283acdadc6d353384fe13ade5d8f6a417fd08f
     private final SubscriptionRepository repository;
 
     public SubscriptionServiceImpl(SubscriptionRepository repository){
@@ -69,7 +82,10 @@ public class SubscriptionServiceImpl implements SubscriptionServices {
         repository.save(subscription);
         response.setMessage("Successfully paid for " + request.getSubscriptionType());
         return response;
+<<<<<<< HEAD
 >>>>>>> 8176f6a12d5f35dc74bf04df3ebb17425f6ec9f5
+=======
+>>>>>>> 1c283acdadc6d353384fe13ade5d8f6a417fd08f
     }
 
 
