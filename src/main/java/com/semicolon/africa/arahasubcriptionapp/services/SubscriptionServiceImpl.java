@@ -8,17 +8,29 @@ import com.semicolon.africa.arahasubcriptionapp.dtos.requests.*;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.ChangeSubsResponse;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.CreateSubscriptionResponse;
 
-import com.semicolon.africa.arahasubcriptionapp.exceptions.AllReadyOnASubscription;
-
-import com.semicolon.africa.arahasubcriptionapp.dtos.responses.DeleteSubResponse;
+import static com.semicolon.africa.arahasubcriptionapp.validations.validations.validateSubscription;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.GetAllSubResponse;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-@Service
 public class SubscriptionServiceImpl implements SubscriptionServices {
+
+//
+//    public SubscriptionServiceImpl(SubscriptionRepository repository){
+//        this.repository = repository;
+//    }
+//
+//    @Override
+//    public CreateSubscriptionResponse createSubscription(CreateSubscriptionRequest request) {
+//        CreateSubscriptionResponse response = new CreateSubscriptionResponse();
+//        validateSubscription(request);
+//        Subscription subscription = mapSubscription(request);
+//        repository.save(subscription);
+//        response.setMessage("Successfully paid for " + request.getSubscriptionType());
+//        return response;
+//    }
+//
 
     private final SubscriptionRepository subscriptionRepository;
 

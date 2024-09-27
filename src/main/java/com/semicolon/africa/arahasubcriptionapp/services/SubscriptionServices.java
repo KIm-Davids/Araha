@@ -8,7 +8,7 @@ import com.semicolon.africa.arahasubcriptionapp.dtos.responses.GetAllSubResponse
 
 public interface SubscriptionServices {
 
-    CreateSubscriptionResponse createSubscription(CreateSubscriptionRequest request);
+//    CreateSubscriptionResponse createSubscription(CreateSubscriptionRequest request);
 
    ChangeSubsResponse  changeSubscription(changeSubRequest request);
 
