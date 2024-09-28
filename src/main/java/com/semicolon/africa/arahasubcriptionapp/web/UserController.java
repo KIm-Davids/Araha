@@ -17,9 +17,11 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RequestMapping("/v1/api/user")
 @AllArgsConstructor
 public class UserController {
+
     private final UserService userService;
+
     @PostMapping("/register")
-    public ResponseEntity<?> register (@RequestBody UserRegisterRequest request){
+    public ResponseEntity<?> register(@RequestBody UserRegisterRequest request){
         try {
             UserRegisterResponse response = userService.register(request);
             return new ResponseEntity<>(new ApiResponse(true, response), CREATED);
@@ -29,7 +31,7 @@ public class UserController {
     }
 
     @PatchMapping("/login")
-    public ResponseEntity<?> login (@RequestBody UserLoginRequest request){
+    public ResponseEntity<?> login(@RequestBody UserLoginRequest request){
         try {
             UserLoginResponse response = userService.login(request);
             return new ResponseEntity<>(new ApiResponse(true, response), CREATED);

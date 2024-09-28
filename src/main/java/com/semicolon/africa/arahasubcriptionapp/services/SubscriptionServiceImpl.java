@@ -1,28 +1,36 @@
 package com.semicolon.africa.arahasubcriptionapp.services;
 
 
-import com.semicolon.africa.arahasubcriptionapp.constants.CardType;
-import com.semicolon.africa.arahasubcriptionapp.constants.SubscriptionType;
-
+import com.semicolon.africa.arahasubcriptionapp.exceptions.SubscriptionNotFindException;
 import com.semicolon.africa.arahasubcriptionapp.data.models.Subscription;
 import com.semicolon.africa.arahasubcriptionapp.data.repositories.SubscriptionRepository;
 import com.semicolon.africa.arahasubcriptionapp.dtos.requests.*;
+import com.semicolon.africa.arahasubcriptionapp.dtos.responses.ChangeSubsResponse;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.CreateSubscriptionResponse;
-import com.semicolon.africa.arahasubcriptionapp.dtos.responses.SubscriptionResponse;
 
-import com.semicolon.africa.arahasubcriptionapp.exceptions.AllReadyOnASubscription;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import static com.semicolon.africa.arahasubcriptionapp.validations.validations.validateSubscription;
+import com.semicolon.africa.arahasubcriptionapp.dtos.responses.GetAllSubResponse;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-
-import static com.semicolon.africa.arahasubcriptionapp.mapper.mapSubscriptions.mapSubscription;
-
-import static com.semicolon.africa.arahasubcriptionapp.mapper.mapSubscriptions.mapSubscription;
-
-@Service
+import java.util.List;
 public class SubscriptionServiceImpl implements SubscriptionServices {
+
+//
+//    public SubscriptionServiceImpl(SubscriptionRepository repository){
+//        this.repository = repository;
+//    }
+//
+//    @Override
+//    public CreateSubscriptionResponse createSubscription(CreateSubscriptionRequest request) {
+//        CreateSubscriptionResponse response = new CreateSubscriptionResponse();
+//        validateSubscription(request);
+//        Subscription subscription = mapSubscription(request);
+//        repository.save(subscription);
+//        response.setMessage("Successfully paid for " + request.getSubscriptionType());
+//        return response;
+//    }
+//
 
     private final SubscriptionRepository subscriptionRepository;
 
@@ -53,8 +61,8 @@ public class SubscriptionServiceImpl implements SubscriptionServices {
         return createSubscriptionResponse;
     }
     @Override
-    public void changeSubscription(changeSubRequest request) {
-
+    public ChangeSubsResponse  changeSubscription(changeSubRequest request) {
+    return null;
     }
 
     @Override
@@ -68,12 +76,23 @@ public class SubscriptionServiceImpl implements SubscriptionServices {
     }
 
     @Override
-    public void cancellingSubscription(cancelSubRequest request) {
+    public DeleteSubResponse deleteSubResponse(DeleteSubRequest request) {
+        Subscription subscription = subscriptionRepository.findSubscriptionById(request.getSub_id());
+        validateForSubscriptionId(request.getSub_id());
+        subscriptionRepository.delete(subscription);
+        DeleteSubResponse response = new DeleteSubResponse();
+        response.setMessage("Subscription deleted successfully");
+        return response ;
+    }
 
+    private void validateForSubscriptionId(Long id) {
+        if(id==null) throw new SubscriptionNotFindException("Subscription id not find");
     }
 
     @Override
-    public void getAllSubscription(getAllSubRequest request) {
-
+    public GetAllSubResponse getAllSubscription(GetAllSubRequest request) {
+        List<Subscription> subscriptions = subscriptionRepository.findAll();
+        GetAllSubResponse response = new GetAllSubResponse();
+        return null;
     }
 }

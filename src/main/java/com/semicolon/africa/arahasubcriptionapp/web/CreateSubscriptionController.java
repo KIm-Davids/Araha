@@ -19,16 +19,6 @@ import static org.springframework.http.HttpStatus.OK;
 @CrossOrigin(origins = "*")
 public class CreateSubscriptionController {
 
-    @Autowired
-    private SubscriptionServiceImpl service;
 
-    @PostMapping("/create-subscription")
-    public ResponseEntity<?> createASubscription(CreateSubscriptionRequest request){
-        try {
-            CreateSubscriptionResponse response = service.createSubscription(request);
-            return new ResponseEntity<>(new ApiResponse(true, response), OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), BAD_REQUEST);
-        }
-    }
+
 }

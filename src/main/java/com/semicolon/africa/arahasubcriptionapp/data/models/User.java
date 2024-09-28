@@ -21,10 +21,8 @@ public class User {
     private String email;
     private String password;
     private String username;
-
     private String phoneNumber;
     private boolean isLoggedIn;
 
-//    private String phoneNumber;
 
 }

@@ -4,7 +4,6 @@ package com.semicolon.africa.arahasubcriptionapp.dtos.requests;
 import com.semicolon.africa.arahasubcriptionapp.constants.CardType;
 import com.semicolon.africa.arahasubcriptionapp.constants.SubscriptionType;
 
-import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,8 +22,6 @@ public class CreateSubscriptionRequest {
     private String user_id;
     private CardType cardType;
     private String userToken;
-    private String subscriptionDesc;
-    private double amount;
     private LocalDateTime localDateTime;
 
 }
