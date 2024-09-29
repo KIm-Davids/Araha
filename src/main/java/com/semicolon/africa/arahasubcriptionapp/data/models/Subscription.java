@@ -14,7 +14,7 @@ import jakarta.persistence.Entity;
 import java.time.LocalDateTime;
 
 @Entity
-//@Table(name = "subscription")
+@Table(name = "subscription")
 @Getter
 @Setter
 public class Subscription {
