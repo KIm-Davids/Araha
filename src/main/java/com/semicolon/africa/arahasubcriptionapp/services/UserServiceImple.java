@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+
 public class UserServiceImple implements UserService {
     private UserRepository userRepository;
     private ModelMapper modelMapper;

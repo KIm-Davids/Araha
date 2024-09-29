@@ -2,9 +2,11 @@ package com.semicolon.africa.arahasubcriptionapp.services;
 
 
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.DeleteSubResponse;
+
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UpdateSubsResponse;
 import com.semicolon.africa.arahasubcriptionapp.exception.InvalidAmountException;
 import com.semicolon.africa.arahasubcriptionapp.exception.InvalidCardException;
+
 import com.semicolon.africa.arahasubcriptionapp.exceptions.AllReadyOnASubscription;
 import com.semicolon.africa.arahasubcriptionapp.exceptions.SubscriptionNotFindException;
 import com.semicolon.africa.arahasubcriptionapp.data.models.Subscription;
@@ -83,18 +85,9 @@ return updateSubsResponse;
 
     }
 
-    @Override
-    public void pausingSubscription(pauseSubRequest request) {
-
-    }
 
     @Override
-    public void resumingSubscription(ResumeSubRequest request) {
-
-    }
-
-    @Override
-    public DeleteSubResponse deleteSubResponse(DeleteSubRequest request) {
+    public DeleteSubResponse deleteSubscription(DeleteSubRequest request) {
         Subscription subscription = subscriptionRepository.findSubscriptionById(request.getSub_id());
         validateForSubscriptionId(request.getSub_id());
         subscriptionRepository.delete(subscription);
@@ -103,14 +96,14 @@ return updateSubsResponse;
         return response ;
     }
 
+    @Override
+    public List<Subscription> getAllSubscriptions() {
+        return subscriptionRepository.findAll();
+    }
+
     private void validateForSubscriptionId(Long id) {
         if(id==null) throw new SubscriptionNotFindException("Subscription id not find");
     }
 
-    @Override
-    public GetAllSubResponse getAllSubscription(GetAllSubRequest request) {
-        List<Subscription> subscriptions = subscriptionRepository.findAll();
-        GetAllSubResponse response = new GetAllSubResponse();
-        return null;
-    }
+
 }
