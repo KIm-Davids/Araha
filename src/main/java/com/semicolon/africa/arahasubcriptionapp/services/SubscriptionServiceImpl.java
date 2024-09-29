@@ -1,6 +1,8 @@
 package com.semicolon.africa.arahasubcriptionapp.services;
 
 
+import com.semicolon.africa.arahasubcriptionapp.dtos.responses.DeleteSubResponse;
+import com.semicolon.africa.arahasubcriptionapp.exceptions.AllReadyOnASubscription;
 import com.semicolon.africa.arahasubcriptionapp.exceptions.SubscriptionNotFindException;
 import com.semicolon.africa.arahasubcriptionapp.data.models.Subscription;
 import com.semicolon.africa.arahasubcriptionapp.data.repositories.SubscriptionRepository;
@@ -14,23 +16,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+@Service
 public class SubscriptionServiceImpl implements SubscriptionServices {
 
-//
-//    public SubscriptionServiceImpl(SubscriptionRepository repository){
-//        this.repository = repository;
-//    }
-//
-//    @Override
-//    public CreateSubscriptionResponse createSubscription(CreateSubscriptionRequest request) {
-//        CreateSubscriptionResponse response = new CreateSubscriptionResponse();
-//        validateSubscription(request);
-//        Subscription subscription = mapSubscription(request);
-//        repository.save(subscription);
-//        response.setMessage("Successfully paid for " + request.getSubscriptionType());
-//        return response;
-//    }
-//
 
     private final SubscriptionRepository subscriptionRepository;
 
@@ -65,18 +53,9 @@ public class SubscriptionServiceImpl implements SubscriptionServices {
     return null;
     }
 
-    @Override
-    public void pausingSubscription(pauseSubRequest request) {
-
-    }
 
     @Override
-    public void resumingSubscription(ResumeSubRequest request) {
-
-    }
-
-    @Override
-    public DeleteSubResponse deleteSubResponse(DeleteSubRequest request) {
+    public DeleteSubResponse deleteSubscription(DeleteSubRequest request) {
         Subscription subscription = subscriptionRepository.findSubscriptionById(request.getSub_id());
         validateForSubscriptionId(request.getSub_id());
         subscriptionRepository.delete(subscription);
@@ -85,14 +64,14 @@ public class SubscriptionServiceImpl implements SubscriptionServices {
         return response ;
     }
 
+    @Override
+    public List<Subscription> getAllSubscriptions() {
+        return subscriptionRepository.findAll();
+    }
+
     private void validateForSubscriptionId(Long id) {
         if(id==null) throw new SubscriptionNotFindException("Subscription id not find");
     }
 
-    @Override
-    public GetAllSubResponse getAllSubscription(GetAllSubRequest request) {
-        List<Subscription> subscriptions = subscriptionRepository.findAll();
-        GetAllSubResponse response = new GetAllSubResponse();
-        return null;
-    }
+
 }

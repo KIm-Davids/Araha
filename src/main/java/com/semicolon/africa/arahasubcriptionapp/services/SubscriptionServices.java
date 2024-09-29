@@ -1,22 +1,20 @@
 package com.semicolon.africa.arahasubcriptionapp.services;
 
+import com.semicolon.africa.arahasubcriptionapp.data.models.Subscription;
 import com.semicolon.africa.arahasubcriptionapp.dtos.requests.*;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.ChangeSubsResponse;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.CreateSubscriptionResponse;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.DeleteSubResponse;
-import com.semicolon.africa.arahasubcriptionapp.dtos.responses.GetAllSubResponse;
+
+import java.util.List;
 
 public interface SubscriptionServices {
 
-//    CreateSubscriptionResponse createSubscription(CreateSubscriptionRequest request);
+    CreateSubscriptionResponse createSubscription(CreateSubscriptionRequest request);
 
-   ChangeSubsResponse  changeSubscription(changeSubRequest request);
+    ChangeSubsResponse  changeSubscription(changeSubRequest request);
 
-    void pausingSubscription(pauseSubRequest request);
+    DeleteSubResponse deleteSubscription(DeleteSubRequest request);
 
-    void resumingSubscription(ResumeSubRequest request);
-
-    DeleteSubResponse deleteSubResponse(DeleteSubRequest request);
-
-    GetAllSubResponse getAllSubscription(GetAllSubRequest request);
+    List<Subscription> getAllSubscriptions();
 }
