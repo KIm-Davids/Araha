@@ -32,16 +32,11 @@ public class SubscriptionServiceImpl implements SubscriptionServices {
 
     @Override
     public CreateSubscriptionResponse createSubscription(CreateSubscriptionRequest createSubscriptionRequest) {
-//        Subscription subscription = subscriptionRepository.findSubscriptionBySubscriptionType(createSubscriptionRequest.getSubscriptionType());
-//            if (subscription.getSubscriptionType().equals(createSubscriptionRequest.getSubscriptionType())) {
-//                throw new AllReadyOnASubscription("Already on a subscription");
-//            }
-
 
         Subscription newSubscription = new Subscription();
         newSubscription.setSubscriptionType(createSubscriptionRequest.getSubscriptionType());
         newSubscription.setActive(true);
-        newSubscription.setId(2L);
+        newSubscription.setId(createSubscriptionRequest.getId());
         newSubscription.setPaymentAmount(createSubscriptionRequest.getPaymentAmount());
         newSubscription.setCardType(createSubscriptionRequest.getCardType());
         newSubscription.setPaymentDesc(createSubscriptionRequest.getPaymentDesc());
@@ -58,7 +53,7 @@ public class SubscriptionServiceImpl implements SubscriptionServices {
 
     @Override
     public UpdateSubsResponse updateSubscription(UpdateSubsRequest updateSubsRequest) {
-    Subscription subscription  = subscriptionRepository.findSubscriptionById(2L);
+    Subscription subscription  = subscriptionRepository.findSubscriptionById(1L);
         if(updateSubsRequest.getCardType().toString().equals(" ")){
             throw new InvalidCardException("No Card Inputted");
         }
@@ -68,13 +63,13 @@ public class SubscriptionServiceImpl implements SubscriptionServices {
         }
 
         if(subscription.getSubscriptionType().equals(updateSubsRequest.getSubscriptionType())){
-//            subscription.setSubscriptionType(updateSubsRequest.getSubscriptionType());
             subscription.setActive(updateSubsRequest.isActive());
             subscription.setPaymentAmount(updateSubsRequest.getPaymentAmount());
             subscription.setCardType(updateSubsRequest.getCardType());
             subscription.setPaymentDesc(updateSubsRequest.getPaymentDesc());
             subscription.setPaymentDate(updateSubsRequest.getPaymentDate());
-            subscription.setDiscountAmount(updateSubsRequest.getDiscountAmount());
+            double discountAmount = (double) 10 / 100 * updateSubsRequest.getPaymentAmount();
+            subscription.setDiscountAmount(discountAmount);
             subscriptionRepository.save(subscription);
         }else {
             throw new AllReadyOnASubscription("Unable to update subscription");

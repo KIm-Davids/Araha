@@ -1,5 +1,8 @@
 package com.semicolon.africa.arahasubcriptionapp.services;
 
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
+import com.semicolon.africa.arahasubcriptionapp.Utils.JwtUtilsImpl;
 import com.semicolon.africa.arahasubcriptionapp.data.models.User;
 import com.semicolon.africa.arahasubcriptionapp.data.repositories.UserRepository;
 import com.semicolon.africa.arahasubcriptionapp.dtos.requests.UpdateUserRequest;
@@ -9,14 +12,19 @@ import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UpdatedUserRespon
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UserLoginResponse;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UserRegisterResponse;
 import com.semicolon.africa.arahasubcriptionapp.exception.EmailAlreadyExist;
+import com.semicolon.africa.arahasubcriptionapp.exceptions.InvalidEmailException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @AllArgsConstructor
@@ -25,16 +33,20 @@ public class UserServiceImple implements UserService {
     private UserRepository userRepository;
     private ModelMapper modelMapper;
     private PasswordEncoder passwordEncoder;
+    private JwtUtilsImpl utils;
     @Override
     public UserRegisterResponse register(UserRegisterRequest userRegisterRequest) {
         validateExistingUserByEmail(userRegisterRequest.getEmail().trim().strip());
         validateExistingUserByPhonenumber(userRegisterRequest.getPhoneNumber());
         validateExistingUserByUsername(userRegisterRequest.getUsername().trim().strip());
+        validateEmail(userRegisterRequest.getEmail());
         String password = passwordEncoder.encode(userRegisterRequest.getPassword());
         userRegisterRequest.setPassword(password);
         User user = modelMapper.map(userRegisterRequest, User.class);
         user = userRepository.save(user);
+        String token = utils.generateToken(userRegisterRequest.getUsername(), userRegisterRequest.getPhoneNumber(), userRegisterRequest.getEmail(),  userRegisterRequest.getPassword());
         UserRegisterResponse response = modelMapper.map(user, UserRegisterResponse.class);
+        response.setToken(token);
         response.setEmail(response.getEmail());
         response.setMessage("successfully registered");
         response.setId(response.getId());
@@ -48,15 +60,24 @@ public class UserServiceImple implements UserService {
     }
 
     @Override
-    public UserLoginResponse login(UserLoginRequest userLoginRequest) {
-        User user = existsByEmail(userLoginRequest.getEmail().trim().strip());
-        validateUserPassword(user, userLoginRequest.getPassword());
-        user.setLoggedIn(true);
-        userRepository.save(user);
-        UserLoginResponse response = modelMapper.map(user, UserLoginResponse.class);
-        response.setId(response.getId());
-        response.setMessage("Logged in Successfully");
-        return response;
+    public UserLoginResponse login(UserLoginRequest userLoginRequest, String jwtToken) throws ParseException {
+        try {
+            String email = extractEmail(jwtToken);
+            String password = utils.extractPassword(jwtToken);
+
+            User user = existsByEmail(email);
+            validateUserPassword(user, password);
+            user.setLoggedIn(true);
+            userRepository.save(user);
+            UserLoginResponse response = modelMapper.map(user, UserLoginResponse.class);
+            response.setId(response.getId());
+            response.setMessage("Logged in Successfully");
+            return response;
+     //       userLoginRequest.getEmail().trim().strip()
+            // userLoginRequest.getPassword()
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     @Override
@@ -71,18 +92,6 @@ public class UserServiceImple implements UserService {
         response.setId(response.getId());
         response.setMessage("User updated successfully");
         return response;
-
-//        User user = findByUserId(userUpdateRequest.getId());
-
-//        user.setEmail(userUpdateRequest.getNewEmail());
-//        user.setPhoneNumber(userUpdateRequest.getNewPhoneNumber());
-//        user.setUsername(userUpdateRequest.getNewUsername());
-//        user.setPassword(passwordEncoder.encode(userUpdateRequest.getNewPassword()));
-//        User updatedUser = userRepository.save(user);
-
-
-
-
     }
 
     private User existsByEmail(String email) {
@@ -114,4 +123,26 @@ public class UserServiceImple implements UserService {
         }
         return  user;
     }
+
+    private JWTClaimsSet extractClaims(String token) throws ParseException {
+        SignedJWT signedJWT = SignedJWT.parse(token);
+        return signedJWT.getJWTClaimsSet();
+    }
+
+    private String extractEmail(String token) throws ParseException {
+        JWTClaimsSet claimsSet = extractClaims(token);
+        return claimsSet.getStringClaim("email");
+    }
+
+    private void validateEmail(String email){
+        String emailToVerify = "^[a-zA-z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2}$";
+        Pattern pattern = Pattern.compile(emailToVerify);
+        Matcher matcher = pattern.matcher(email);
+        if(!matcher.matches()){
+            throw new InvalidEmailException("Invalid Email");
+        }
+    }
+
+
+
 }

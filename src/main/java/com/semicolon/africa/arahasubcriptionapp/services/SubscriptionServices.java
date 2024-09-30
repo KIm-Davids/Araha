@@ -11,14 +11,13 @@ import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UpdateSubsRespons
 
 import java.util.List;
 
-    CreateSubscriptionResponse createSubscription(CreateSubscriptionRequest createSubscriptionRequest);
 
-    UpdateSubsResponse updateSubscription(UpdateSubsRequest request);
 public interface SubscriptionServices {
 
     CreateSubscriptionResponse createSubscription(CreateSubscriptionRequest request);
 
-    ChangeSubsResponse  changeSubscription(changeSubRequest request);
+    UpdateSubsResponse updateSubscription(UpdateSubsRequest request);
+
 
     DeleteSubResponse deleteSubscription(DeleteSubRequest request);
 

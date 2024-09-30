@@ -14,6 +14,7 @@ import com.semicolon.africa.arahasubcriptionapp.dtos.requests.CreateSubscription
 import com.semicolon.africa.arahasubcriptionapp.dtos.requests.DeleteSubRequest;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.CreateSubscriptionResponse;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.DeleteSubResponse;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -55,26 +56,19 @@ class SubscriptionTest {
 void testUpdateSubscription() {
 
     UpdateSubsRequest request = new UpdateSubsRequest();
-    request.setSubscriptionType(SubscriptionType.GOTV);
+    request.setSubscriptionType(JUMIA);
     request.setCardType(CardType.VERVE);
     request.setPaymentAmount(2000);
 
     UpdateSubsResponse response = service.updateSubscription(request);
     assertEquals("Updated Successfully", response.getMessage());
 
-
-}
-        request.setSubscriptionType(NETFLIX);
-        request.setPaymentAmount(200.00);
-        request.setCardType(MASTERCARD);
-        CreateSubscriptionResponse response = service.createSubscription(request);
-        assertEquals("Successfully created subscription", response.getMessage());
     }
     @Test
     public  void testThatSubscriptionCanBeDelete(){
 
         DeleteSubRequest deleteSubRequest = new DeleteSubRequest();
-        deleteSubRequest.setSub_id(2L);
+        deleteSubRequest.setSub_id(1L);
         DeleteSubResponse response = service.deleteSubscription(deleteSubRequest);
         assertEquals("Subscription deleted successfully",response.getMessage());
 

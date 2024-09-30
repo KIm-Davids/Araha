@@ -5,6 +5,6 @@ import lombok.Getter;
 @Getter
 
 public enum SubscriptionType {
-    NETFLIX, JUMIA, GOTV
+    NETFLIX, JUMIA, GOTV, NOT_SET
 
 }
