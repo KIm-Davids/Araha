@@ -1,6 +1,11 @@
 package com.semicolon.africa.arahasubcriptionapp.dtos.responses;
 
-public class ChangeSubsResponse {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class UpdateSubsResponse {
 
     private String message;
 

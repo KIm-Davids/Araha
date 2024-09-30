@@ -3,11 +3,14 @@ package com.semicolon.africa.arahasubcriptionapp.services;
 import com.semicolon.africa.arahasubcriptionapp.data.models.User;
 import com.semicolon.africa.arahasubcriptionapp.dtos.requests.UpdateUserRequest;
 import com.semicolon.africa.arahasubcriptionapp.dtos.requests.UserLoginRequest;
+import com.semicolon.africa.arahasubcriptionapp.dtos.requests.UserLogoutRequest;
 import com.semicolon.africa.arahasubcriptionapp.dtos.requests.UserRegisterRequest;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UpdatedUserResponse;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UserLoginResponse;
+import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UserLogoutResponse;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UserRegisterResponse;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface UserService {
@@ -16,7 +19,9 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    UserLoginResponse login(UserLoginRequest userLoginRequest);
+    UserLoginResponse login(UserLoginRequest userLoginRequest, String jwt) throws ParseException;
 
     UpdatedUserResponse update(UpdateUserRequest userUpdateRequest);
+
+    UserLogoutResponse logOut(UserLogoutRequest userLogoutRequest);
 }

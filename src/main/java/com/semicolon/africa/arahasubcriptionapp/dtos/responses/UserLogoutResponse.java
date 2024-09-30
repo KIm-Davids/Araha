@@ -5,9 +5,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class UserRegisterResponse {
-    private String id;
-    private String email;
+public class UserLogoutResponse {
     private String message;
-    private String token;
+    private boolean isLoggedIn;
 }
