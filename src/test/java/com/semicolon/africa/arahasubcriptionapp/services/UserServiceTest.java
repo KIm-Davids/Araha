@@ -4,12 +4,14 @@ import com.semicolon.africa.arahasubcriptionapp.Utils.JwtUtilsImpl;
 import com.semicolon.africa.arahasubcriptionapp.data.repositories.UserRepository;
 import com.semicolon.africa.arahasubcriptionapp.dtos.requests.UpdateUserRequest;
 import com.semicolon.africa.arahasubcriptionapp.dtos.requests.UserLoginRequest;
+import com.semicolon.africa.arahasubcriptionapp.dtos.requests.UserLogoutRequest;
 import com.semicolon.africa.arahasubcriptionapp.dtos.requests.UserRegisterRequest;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UpdatedUserResponse;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UserLoginResponse;
+import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UserLogoutResponse;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UserRegisterResponse;
 import com.semicolon.africa.arahasubcriptionapp.exception.EmailAlreadyExist;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,11 +28,6 @@ class UserServiceTest {
     private UserRepository userRepository;
     @Autowired
     private JwtUtilsImpl impl;
-
-//    @BeforeEach
-//    public void setUp() {
-//        userRepository.deleteAll();
-//    }
 
     @Test
     public void testToRegisterUser() {
@@ -54,10 +51,10 @@ class UserServiceTest {
     public void testThatAUserCannotRegisterTwiceWithSameEmail_ThrowException() {
         userRegister();
         UserRegisterRequest userRegisterRequest = new UserRegisterRequest();
-        userRegisterRequest.setEmail("araha@gmail.com");
+        userRegisterRequest.setEmail("arahia@gmail.com");
         userRegisterRequest.setPassword("password");
-        userRegisterRequest.setPhoneNumber("08133608698");
-        userRegisterRequest.setUsername("username");
+        userRegisterRequest.setPhoneNumber("08133608692");
+        userRegisterRequest.setUsername("users");
         assertThrows(EmailAlreadyExist.class, () -> userService.register(userRegisterRequest));
     }
 
@@ -93,11 +90,12 @@ class UserServiceTest {
     @Test
     public void testThatUserUpdateTheirDetails() throws ParseException {
 //        userRegister();
+    public void testThatUserUpdateTheirDetails() {
         userLogin();
         UpdateUserRequest userUpdateRequest = new UpdateUserRequest();
         userUpdateRequest.setNewEmail("newmail@gmail.com");
         userUpdateRequest.setNewPhoneNumber("08133608699");
-        userUpdateRequest.setId(78L);
+        userUpdateRequest.setId(96L);
         userUpdateRequest.setNewUsername("NewUser");
         userUpdateRequest.setNewPassword("newpassword");
         UpdatedUserResponse updatedUserResponse = userService.update(userUpdateRequest);
@@ -105,6 +103,23 @@ class UserServiceTest {
         assertThat(updatedUserResponse.getMessage()).contains("updated successfully");
     }
 
+    @Test
+    public void testThatUserCanLogout() {
+        userLogin();
+        UserLogoutRequest userLogoutRequest = new UserLogoutRequest();
+        userLogoutRequest.setEmail("arahia@gmail.com");
+        UserLogoutResponse userLogoutResponse = userService.logOut(userLogoutRequest);
+        assertThat(userLogoutResponse).isNotNull();
+        assertThat(userLogoutResponse.getMessage()).contains("Logged Out Succcessfully");
+        assertThat(userLogoutResponse.isLoggedIn()).isEqualTo(false);
+    }
+//    public void testThatUserUpdateTheirDetails(){
+//        userRegister();
+//        userLogin();
+//        UpdateUserRequest userUpdateRequest = new UpdateUserRequest();
+//
+//
+//    }
 
 
 }

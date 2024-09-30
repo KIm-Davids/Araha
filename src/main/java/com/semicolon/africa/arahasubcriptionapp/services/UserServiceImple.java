@@ -7,9 +7,11 @@ import com.semicolon.africa.arahasubcriptionapp.data.models.User;
 import com.semicolon.africa.arahasubcriptionapp.data.repositories.UserRepository;
 import com.semicolon.africa.arahasubcriptionapp.dtos.requests.UpdateUserRequest;
 import com.semicolon.africa.arahasubcriptionapp.dtos.requests.UserLoginRequest;
+import com.semicolon.africa.arahasubcriptionapp.dtos.requests.UserLogoutRequest;
 import com.semicolon.africa.arahasubcriptionapp.dtos.requests.UserRegisterRequest;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UpdatedUserResponse;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UserLoginResponse;
+import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UserLogoutResponse;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UserRegisterResponse;
 import com.semicolon.africa.arahasubcriptionapp.exception.EmailAlreadyExist;
 import com.semicolon.africa.arahasubcriptionapp.exceptions.InvalidEmailException;
@@ -91,6 +93,18 @@ public class UserServiceImple implements UserService {
         UpdatedUserResponse response = modelMapper.map(updatedUser, UpdatedUserResponse.class);
         response.setId(response.getId());
         response.setMessage("User updated successfully");
+        return response;
+
+
+    }
+
+    @Override
+    public UserLogoutResponse logOut(UserLogoutRequest userLogoutRequest) {
+        Optional<User> user = userRepository.findByEmail(userLogoutRequest.getEmail());
+        user.get().setLoggedIn(false);
+        userRepository.save(user.get());
+        UserLogoutResponse response = modelMapper.map(user, UserLogoutResponse.class);
+        response.setMessage("Logged Out Succcessfully");
         return response;
     }
 
