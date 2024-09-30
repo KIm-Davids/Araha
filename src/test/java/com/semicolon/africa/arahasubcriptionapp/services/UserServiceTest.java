@@ -92,6 +92,7 @@ class UserServiceTest {
         assertThat(updatedUserResponse).isNotNull();
         assertThat(updatedUserResponse.getMessage()).contains("updated successfully");
     }
+<<<<<<< HEAD
     @Test
     public void testThatUserCanLogout() {
         userLogin();
@@ -102,4 +103,15 @@ class UserServiceTest {
         assertThat(userLogoutResponse.getMessage()).contains("Logged Out Succcessfully");
         assertThat(userLogoutResponse.isLoggedIn()).isEqualTo(false);
     }
+=======
+//    public void testThatUserUpdateTheirDetails(){
+//        userRegister();
+//        userLogin();
+//        UpdateUserRequest userUpdateRequest = new UpdateUserRequest();
+//
+//
+//    }
+
+
+>>>>>>> 62b5e4aee25c0df2a671bf86ad87a87c2fe543bb
 }
