@@ -14,7 +14,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
-@RequestMapping("/v1/api/user")
+//@RequestMapping("/v1/api/user")
 @AllArgsConstructor
 public class UserController {
 
@@ -31,9 +31,9 @@ public class UserController {
     }
 
     @PatchMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserLoginRequest request){
+    public ResponseEntity<?> login(@RequestBody UserLoginRequest request, String jwtToken){
         try {
-            UserLoginResponse response = userService.login(request);
+            UserLoginResponse response = userService.login(request, jwtToken);
             return new ResponseEntity<>(new ApiResponse(true, response), CREATED);
         }catch (Exception exception) {
             return new ResponseEntity<>(new ApiResponse(false, exception.getMessage()), BAD_REQUEST);

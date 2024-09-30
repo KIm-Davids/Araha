@@ -9,4 +9,5 @@ public class UserRegisterResponse {
     private String id;
     private String email;
     private String message;
+    private String token;
 }

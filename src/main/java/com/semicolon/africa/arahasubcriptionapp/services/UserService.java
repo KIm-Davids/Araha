@@ -10,6 +10,7 @@ import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UserLoginResponse
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UserLogoutResponse;
 import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UserRegisterResponse;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface UserService {
@@ -18,7 +19,7 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    UserLoginResponse login(UserLoginRequest userLoginRequest);
+    UserLoginResponse login(UserLoginRequest userLoginRequest, String jwt) throws ParseException;
 
     UpdatedUserResponse update(UpdateUserRequest userUpdateRequest);
 

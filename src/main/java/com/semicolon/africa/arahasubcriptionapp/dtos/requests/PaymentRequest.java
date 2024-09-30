@@ -1,9 +1,12 @@
 package com.semicolon.africa.arahasubcriptionapp.dtos.requests;
-import com.semicolon.africa.arahasubcriptionapp.constants.SubscriptionType;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class PaymentRequest {
 
-    private String paymentDesc;
-    private String paymentAmount;
-    private SubscriptionType subscriptionType;
+    private Long balance;
+    private String email;
+//    private String payment_method;
 }
