@@ -1,31 +1,95 @@
 package com.semicolon.africa.arahasubcriptionapp.services;
 
-import com.semicolon.africa.constants.SubscriptionType;
-import com.semicolon.africa.models.Subscription;
-import com.semicolon.africa.services.SubscriptionServiceImpl;
-import com.semicolon.africa.services.SubscriptionServices;
-import org.junit.jupiter.api.Test;
+import com.semicolon.africa.arahasubcriptionapp.constants.CardType;
+import com.semicolon.africa.arahasubcriptionapp.constants.SubscriptionType;
+import com.semicolon.africa.arahasubcriptionapp.data.models.Subscription;
+import com.semicolon.africa.arahasubcriptionapp.data.repositories.SubscriptionRepository;
+import com.semicolon.africa.arahasubcriptionapp.dtos.requests.CreateSubscriptionRequest;
+import com.semicolon.africa.arahasubcriptionapp.dtos.requests.UpdateSubsRequest;
+import com.semicolon.africa.arahasubcriptionapp.dtos.responses.CreateSubscriptionResponse;
+import com.semicolon.africa.arahasubcriptionapp.dtos.responses.UpdateSubsResponse;
+import org.junit.jupiter.api.Nested;
+import com.semicolon.africa.arahasubcriptionapp.data.models.Subscription;
+import com.semicolon.africa.arahasubcriptionapp.dtos.requests.CreateSubscriptionRequest;
+import com.semicolon.africa.arahasubcriptionapp.dtos.requests.DeleteSubRequest;
+import com.semicolon.africa.arahasubcriptionapp.dtos.responses.CreateSubscriptionResponse;
+import com.semicolon.africa.arahasubcriptionapp.dtos.responses.DeleteSubResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.List;
+
+import static com.semicolon.africa.arahasubcriptionapp.constants.CardType.MASTERCARD;
+import static com.semicolon.africa.arahasubcriptionapp.constants.CardType.VISA;
+import static com.semicolon.africa.arahasubcriptionapp.constants.SubscriptionType.*;
+
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 @SpringBootTest
-public class subscriptionTest {
+class SubscriptionTest {
 
     @Autowired
-    private SubscriptionServiceImpl service;
+    private SubscriptionRepository subscriptionRepository;
+
+
+    @Autowired
+    private SubscriptionServices service;
 
     @Test
-    public static void testThatUserCanSubscribe(){
-        Subscription subscription = new Subscription();
-        subscription.setSubscriptionType(SubscriptionType.NETFLIX);
-        subscription.setPaymentDate(LocalDateTime.now());
-        subscription.setActive(true);
-        subscription.setPaymentDesc("pay for Netflix");
-        subscription.setPaymentAmount(1200);
-        subscription.setUserToken("UserToken");
-        service.createSubscription();
+    void testCreateSubscription_Success() {
+        CreateSubscriptionRequest request = new CreateSubscriptionRequest();
+        request.setSubscriptionType(SubscriptionType.GOTV);
+        request.setPaymentAmount(100.0);
+        request.setCardType(CardType.VERVE);
+        CreateSubscriptionResponse response = service.createSubscription(request);
+        assertEquals("Successfully created subscription", response.getMessage());
     }
+
+
+@Test
+void testUpdateSubscription() {
+
+    UpdateSubsRequest request = new UpdateSubsRequest();
+    request.setSubscriptionType(SubscriptionType.GOTV);
+    request.setCardType(CardType.VERVE);
+    request.setPaymentAmount(2000);
+
+    UpdateSubsResponse response = service.updateSubscription(request);
+    assertEquals("Updated Successfully", response.getMessage());
+
+
 }
+        request.setSubscriptionType(NETFLIX);
+        request.setPaymentAmount(200.00);
+        request.setCardType(MASTERCARD);
+        CreateSubscriptionResponse response = service.createSubscription(request);
+        assertEquals("Successfully created subscription", response.getMessage());
+    }
+    @Test
+    public  void testThatSubscriptionCanBeDelete(){
+
+        DeleteSubRequest deleteSubRequest = new DeleteSubRequest();
+        deleteSubRequest.setSub_id(2L);
+        DeleteSubResponse response = service.deleteSubscription(deleteSubRequest);
+        assertEquals("Subscription deleted successfully",response.getMessage());
+
+    }
+    @Test
+    public void testToGetAllSubscriptions(){
+        List<Subscription> subscriptions = service.getAllSubscriptions();
+        assertNotNull(subscriptions);
+        assertEquals(2,subscriptions.size());
+
+    }
+
+}
+
+
+
+
+

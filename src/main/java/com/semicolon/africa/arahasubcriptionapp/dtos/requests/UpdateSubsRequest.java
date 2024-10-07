@@ -1,38 +1,26 @@
-package com.semicolon.africa.arahasubcriptionapp.data.models;
+package com.semicolon.africa.arahasubcriptionapp.dtos.requests;
 
 import com.semicolon.africa.arahasubcriptionapp.constants.CardType;
 import com.semicolon.africa.arahasubcriptionapp.constants.SubscriptionType;
-
-import jakarta.persistence.*;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-import jakarta.persistence.Entity;
-//import jakarta.persistence.Table;
-
-
 import java.time.LocalDateTime;
-
-@Entity
-@Table(name = "subscription")
 @Getter
 @Setter
-public class Subscription {
+public class UpdateSubsRequest {
 
-
-    private String userToken;
-    @Enumerated(EnumType.STRING)
-    private CardType cardType;
-    @Enumerated(EnumType.STRING)
+    @Id
+    private long id;
     private SubscriptionType subscriptionType;
     private String paymentDesc;
     private double paymentAmount;
     private LocalDateTime paymentDate;
     private double discountAmount;
     private boolean isActive;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-
+    private String user_id;
+    private CardType cardType;
+    private String userToken;
+    private LocalDateTime localDateTime;
 }
